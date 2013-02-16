@@ -12,7 +12,7 @@ module Adapter
     attr_reader :redis
 
     def save(event)
-      redis.lpush 'tweets', JSON.generate(event.to_hash.stringify_keys)
+      redis.zadd 'tweets', event.id, JSON.generate(event.to_hash.stringify_keys)
     end
   end
 end
