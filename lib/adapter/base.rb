@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -^-
 
-class Adapter::Base
-  def save(event)
-    raise NotImplementedError
+module Adapter
+  class Base
+    def save(event)
+      raise NotImplementedError
+    end
   end
 end

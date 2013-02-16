@@ -1,12 +1,18 @@
 # -*- coding: utf-8 -*-
+require 'json'
 require 'redis'
 
-class Adapter::Resid < Adapter::Base
-  def initialize(*args)
-    @redis = Redis.new args
-  end
+module Adapter
+  class Redis < Adapter::Base
+    def initialize(*args)
+      @redis = ::Redis.new args.last
+    end
 
-  def save
-    nil
+    attr_reader :redis
+
+    def save(event)
+      STDOUT.puts event.inspect
+      redis.rpush 'tweets', Time.now.to_s
+    end
   end
 end
