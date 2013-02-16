@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 require 'json'
 require 'redis'
+require 'active_support/core_ext/hash'
 
 module Adapter
   class Redis < Adapter::Base
@@ -11,8 +12,7 @@ module Adapter
     attr_reader :redis
 
     def save(event)
-      STDOUT.puts event.inspect
-      redis.rpush 'tweets', Time.now.to_s
+      redis.lpush 'tweets', JSON.generate(event.to_hash.stringify_keys)
     end
   end
 end
